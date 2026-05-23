@@ -1,0 +1,94 @@
+import { Pool } from "pg";
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || 'postgres://postgres:nuevo2029@localhost:5432/ecommerce_pc',
+});
+
+async function insertRam() {
+  console.log('Inserting RAM products into database...');
+
+  const sql = `
+-- RAM DDR4 Modules
+INSERT INTO components (id, name, brand, model, slug, price, stock, image, specifications, "socketType", "wattage", "isActive", "isFeatured", "categoryId", "createdAt", "updatedAt") VALUES
+-- CORSAIR DDR4
+('comp-corsair-vengeance-lpx-16gb-ddr4-3200', 'Corsair Vengeance LPX 16GB (2x8GB) DDR4 3200MHz', 'Corsair', 'Vengeance LPX 16GB DDR4', 'corsair-vengeance-lpx-16gb-ddr4-3200', 44.99, 80, 'https://via.placeholder.com/400x300?text=Corsair+Vengeance+LPX', '{"capacity": "16GB (2x8GB)", "speed": "DDR4-3200", "memoryType": "DDR4", "latency": "CL16", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-corsair-vengeance-lpx-32gb-ddr4-3200', 'Corsair Vengeance LPX 32GB (2x16GB) DDR4 3200MHz', 'Corsair', 'Vengeance LPX 32GB DDR4', 'corsair-vengeance-lpx-32gb-ddr4-3200', 79.99, 60, 'https://via.placeholder.com/400x300?text=Corsair+Vengeance+LPX+32GB', '{"capacity": "32GB (2x16GB)", "speed": "DDR4-3200", "memoryType": "DDR4", "latency": "CL16", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-corsair-vengeance-lpx-64gb-ddr4-3200', 'Corsair Vengeance LPX 64GB (4x16GB) DDR4 3200MHz', 'Corsair', 'Vengeance LPX 64GB DDR4', 'corsair-vengeance-lpx-64gb-ddr4-3200', 159.99, 25, 'https://via.placeholder.com/400x300?text=Corsair+Vengeance+LPX+64GB', '{"capacity": "64GB (4x16GB)", "speed": "DDR4-3200", "memoryType": "DDR4", "latency": "CL16", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-corsair-vengeance-rgb-pro-16gb-ddr4-3600', 'Corsair Vengeance RGB Pro 16GB (2x8GB) DDR4 3600MHz', 'Corsair', 'Vengeance RGB Pro 16GB DDR4', 'corsair-vengeance-rgb-pro-16gb-ddr4-3600', 69.99, 45, 'https://via.placeholder.com/400x300?text=Corsair+RGB+Pro+16GB', '{"capacity": "16GB (2x8GB)", "speed": "DDR4-3600", "memoryType": "DDR4", "latency": "CL18", "voltage": "1.35V", "rgb": true}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+
+-- G.SKILL DDR4
+('comp-gskill-trident-z-royal-32gb-ddr4-4000', 'G.Skill Trident Z Royal 32GB (2x16GB) DDR4 4000MHz', 'G.Skill', 'Trident Z Royal 32GB DDR4', 'gskill-trident-z-royal-32gb-ddr4-4000', 169.99, 30, 'https://via.placeholder.com/400x300?text=G.Skill+Royal+32GB', '{"capacity": "32GB (2x16GB)", "speed": "DDR4-4000", "memoryType": "DDR4", "latency": "CL18", "voltage": "1.35V", "rgb": true}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+('comp-gskill-trident-z-rgb-16gb-ddr4-3200', 'G.Skill Trident Z RGB 16GB (2x8GB) DDR4 3200MHz', 'G.Skill', 'Trident Z RGB 16GB DDR4', 'gskill-trident-z-rgb-16gb-ddr4-3200', 79.99, 50, 'https://via.placeholder.com/400x300?text=G.Skill+Trident+Z+RGB', '{"capacity": "16GB (2x8GB)", "speed": "DDR4-3200", "memoryType": "DDR4", "latency": "CL16", "voltage": "1.35V", "rgb": true}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-gskill-ripjaws-v-32gb-ddr4-3600', 'G.Skill Ripjaws V 32GB (2x16GB) DDR4 3600MHz', 'G.Skill', 'Ripjaws V 32GB DDR4', 'gskill-ripjaws-v-32gb-ddr4-3600', 94.99, 55, 'https://via.placeholder.com/400x300?text=G.Skill+Ripjaws+V', '{"capacity": "32GB (2x16GB)", "speed": "DDR4-3600", "memoryType": "DDR4", "latency": "CL18", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- KINGSTON DDR4
+('comp-kingston-fury-beast-32gb-ddr4-3200', 'Kingston FURY Beast 32GB (2x16GB) DDR4 3200MHz', 'Kingston', 'FURY Beast 32GB DDR4', 'kingston-fury-beast-32gb-ddr4-3200', 69.99, 70, 'https://via.placeholder.com/400x300?text=Kingston+FURY+Beast', '{"capacity": "32GB (2x16GB)", "speed": "DDR4-3200", "memoryType": "DDR4", "latency": "CL16", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-kingston-fury-renegade-16gb-ddr4-4000', 'Kingston FURY Renegade 16GB (2x8GB) DDR4 4000MHz', 'Kingston', 'FURY Renegade 16GB DDR4', 'kingston-fury-renegade-16gb-ddr4-4000', 109.99, 35, 'https://via.placeholder.com/400x300?text=Kingston+FURY+Renegade', '{"capacity": "16GB (2x8GB)", "speed": "DDR4-4000", "memoryType": "DDR4", "latency": "CL19", "voltage": "1.4V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- CRUCIAL DDR4  
+('comp-crucial-ballistix-32gb-ddr4-3200', 'Crucial Ballistix 32GB (2x16GB) DDR4 3200MHz', 'Crucial', 'Ballistix 32GB DDR4', 'crucial-ballistix-32gb-ddr4-3200', 99.99, 45, 'https://via.placeholder.com/400x300?text=Crucial+Ballistix+32GB', '{"capacity": "32GB (2x16GB)", "speed": "DDR4-3200", "memoryType": "DDR4", "latency": "CL16", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- PATRIOT DDR4
+('comp-patriot-viper-steel-16gb-ddr4-4400', 'Patriot Viper Steel 16GB (2x8GB) DDR4 4400MHz', 'Patriot', 'Viper Steel 16GB DDR4', 'patriot-viper-steel-16gb-ddr4-4400', 89.99, 25, 'https://via.placeholder.com/400x300?text=Patriot+Viper+Steel', '{"capacity": "16GB (2x8GB)", "speed": "DDR4-4400", "memoryType": "DDR4", "latency": "CL19", "voltage": "1.45V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- TEAMGROUP DDR4
+('comp-teamgroup-t-force-delta-32gb-ddr4-3600', 'TeamGroup T-Force Delta 32GB (2x16GB) DDR4 3600MHz', 'TeamGroup', 'T-Force Delta 32GB DDR4', 'teamgroup-t-force-delta-32gb-ddr4-3600', 84.99, 40, 'https://via.placeholder.com/400x300?text=TeamGroup+Delta', '{"capacity": "32GB (2x16GB)", "speed": "DDR4-3600", "memoryType": "DDR4", "latency": "CL18", "voltage": "1.35V", "rgb": true}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- RAM DDR5 Modules
+-- CORSAIR DDR5
+('comp-corsair-vengeance-ddr5-16gb-5200', 'Corsair Vengeance DDR5 16GB (2x8GB) 5200MHz', 'Corsair', 'Vengeance DDR5 16GB', 'corsair-vengeance-ddr5-16gb-5200', 89.99, 60, 'https://via.placeholder.com/400x300?text=Corsair+Vengeance+DDR5', '{"capacity": "16GB (2x8GB)", "speed": "DDR5-5200", "memoryType": "DDR5", "latency": "CL40", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-corsair-vengeance-ddr5-32gb-5600', 'Corsair Vengeance DDR5 32GB (2x16GB) 5600MHz', 'Corsair', 'Vengeance DDR5 32GB', 'corsair-vengeance-ddr5-32gb-5600', 129.99, 55, 'https://via.placeholder.com/400x300?text=Corsair+Vengeance+DDR5+32', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5600", "memoryType": "DDR5", "latency": "CL36", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+('comp-corsair-vengeance-ddr5-64gb-5600', 'Corsair Vengeance DDR5 64GB (2x32GB) 5600MHz', 'Corsair', 'Vengeance DDR5 64GB', 'corsair-vengeance-ddr5-64gb-5600', 249.99, 25, 'https://via.placeholder.com/400x300?text=Corsair+Vengeance+DDR5+64', '{"capacity": "64GB (2x32GB)", "speed": "DDR5-5600", "memoryType": "DDR5", "latency": "CL36", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-corsair-dominator-platinum-ddr5-32gb-6200', 'Corsair Dominator Platinum DDR5 32GB (2x16GB) 6200MHz', 'Corsair', 'Dominator Platinum DDR5 32GB', 'corsair-dominator-platinum-ddr5-32gb-6200', 189.99, 30, 'https://via.placeholder.com/400x300?text=Corsair+Dominator+Platinum', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-6200", "memoryType": "DDR5", "latency": "CL36", "voltage": "1.4V", "rgb": false}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+
+-- G.SKILL DDR5
+('comp-gskill-trident-z5-rgb-32gb-6000', 'G.Skill Trident Z5 RGB 32GB (2x16GB) DDR5 6000MHz', 'G.Skill', 'Trident Z5 RGB 32GB DDR5', 'gskill-trident-z5-rgb-32gb-6000', 159.99, 40, 'https://via.placeholder.com/400x300?text=G.Skill+Trident+Z5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-6000", "memoryType": "DDR5", "latency": "CL30", "voltage": "1.35V", "rgb": true}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+('comp-gskill-trident-z5-rgb-64gb-6000', 'G.Skill Trident Z5 RGB 64GB (2x32GB) DDR5 6000MHz', 'G.Skill', 'Trident Z5 RGB 64GB DDR5', 'gskill-trident-z5-rgb-64gb-6000', 319.99, 15, 'https://via.placeholder.com/400x300?text=G.Skill+Trident+Z5+64GB', '{"capacity": "64GB (2x32GB)", "speed": "DDR5-6000", "memoryType": "DDR5", "latency": "CL30", "voltage": "1.35V", "rgb": true}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-gskill-ripjaws-s5-32gb-5600', 'G.Skill Ripjaws S5 32GB (2x16GB) DDR5 5600MHz', 'G.Skill', 'Ripjaws S5 32GB DDR5', 'gskill-ripjaws-s5-32gb-5600', 119.99, 50, 'https://via.placeholder.com/400x300?text=G.Skill+Ripjaws+S5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5600", "memoryType": "DDR5", "latency": "CL36", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-gskill-flare-x5-32gb-5200', 'G.Skill Flare X5 32GB (2x16GB) DDR5 5200MHz', 'G.Skill', 'Flare X5 32GB DDR5', 'gskill-flare-x5-32gb-5200', 99.99, 55, 'https://via.placeholder.com/400x300?text=G.Skill+Flare+X5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5200", "memoryType": "DDR5", "latency": "CL40", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- KINGSTON DDR5
+('comp-kingston-fury-beast-ddr5-32gb-5200', 'Kingston FURY Beast 32GB (2x16GB) DDR5 5200MHz', 'Kingston', 'FURY Beast 32GB DDR5', 'kingston-fury-beast-ddr5-32gb-5200', 109.99, 50, 'https://via.placeholder.com/400x300?text=Kingston+FURY+Beast+DDR5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5200", "memoryType": "DDR5", "latency": "CL40", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-kingston-fury-renegade-ddr5-32gb-6400', 'Kingston FURY Renegade 32GB (2x16GB) DDR5 6400MHz', 'Kingston', 'FURY Renegade 32GB DDR5', 'kingston-fury-renegade-ddr5-32gb-6400', 179.99, 25, 'https://via.placeholder.com/400x300?text=Kingston+FURY+Renegade+DDR5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-6400", "memoryType": "DDR5", "latency": "CL32", "voltage": "1.4V", "rgb": false}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+('comp-kingston-fury-renegade-ddr5-64gb-6000', 'Kingston FURY Renegade 64GB (2x32GB) DDR5 6000MHz', 'Kingston', 'FURY Renegade 64GB DDR5', 'kingston-fury-renegade-ddr5-64gb-6000', 349.99, 20, 'https://via.placeholder.com/400x300?text=Kingston+FURY+Renegade+DDR5+64', '{"capacity": "64GB (2x32GB)", "speed": "DDR5-6000", "memoryType": "DDR5", "latency": "CL32", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- CRUCIAL DDR5
+('comp-crucial-ddr5-4800-16gb', 'Crucial DDR5 16GB (2x8GB) 4800MHz', 'Crucial', 'DDR5 16GB', 'crucial-ddr5-4800-16gb', 54.99, 80, 'https://via.placeholder.com/400x300?text=Crucial+DDR5+16GB', '{"capacity": "16GB (2x8GB)", "speed": "DDR5-4800", "memoryType": "DDR5", "latency": "CL40", "voltage": "1.1V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-crucial-ddr5-5600-32gb', 'Crucial DDR5 32GB (2x16GB) 5600MHz', 'Crucial', 'DDR5 32GB', 'crucial-ddr5-5600-32gb', 99.99, 60, 'https://via.placeholder.com/400x300?text=Crucial+DDR5+32GB', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5600", "memoryType": "DDR5", "latency": "CL36", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+('comp-crucial-ddr5-32gb-5200', 'Crucial Pro DDR5 32GB (2x16GB) 5200MHz', 'Crucial', 'Pro DDR5 32GB', 'crucial-ddr5-32gb-5200', 89.99, 45, 'https://via.placeholder.com/400x300?text=Crucial+Pro+DDR5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5200", "memoryType": "DDR5", "latency": "CL38", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- TEAMGROUP DDR5
+('comp-teamgroup-t-force-delta-rgb-ddr5-32gb-6000', 'TeamGroup T-Force Delta RGB 32GB (2x16GB) DDR5 6000MHz', 'TeamGroup', 'T-Force Delta RGB 32GB DDR5', 'teamgroup-t-force-delta-rgb-ddr5-32gb-6000', 139.99, 35, 'https://via.placeholder.com/400x300?text=TeamGroup+Delta+DDR5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-6000", "memoryType": "DDR5", "latency": "CL38", "voltage": "1.35V", "rgb": true}', NULL, NULL, true, true, 'cat-ram', NOW(), NOW()),
+('comp-teamgroup-t-force-vulcan-ddr5-32gb-5200', 'TeamGroup T-Force Vulcan 32GB (2x16GB) DDR5 5200MHz', 'TeamGroup', 'T-Force Vulcan 32GB DDR5', 'teamgroup-t-force-vulcan-ddr5-32gb-5200', 99.99, 45, 'https://via.placeholder.com/400x300?text=TeamGroup+Vulcan+DDR5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5200", "memoryType": "DDR5", "latency": "CL40", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- PATRIOT DDR5
+('comp-patriot-viper-venom-ddr5-32gb-6000', 'Patriot Viper Venom 32GB (2x16GB) DDR5 6000MHz', 'Patriot', 'Viper Venom 32GB DDR5', 'patriot-viper-venom-ddr5-32gb-6000', 129.99, 30, 'https://via.placeholder.com/400x300?text=Patriot+Viper+Venom', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-6000", "memoryType": "DDR5", "latency": "CL36", "voltage": "1.35V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+('comp-patriot-viper-elite-ddr5-32gb-5600', 'Patriot Viper Elite II 32GB (2x16GB) DDR5 5600MHz', 'Patriot', 'Viper Elite II 32GB DDR5', 'patriot-viper-elite-ddr5-32gb-5600', 104.99, 40, 'https://via.placeholder.com/400x300?text=Patriot+Viper+Elite', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5600", "memoryType": "DDR5", "latency": "CL36", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- SILICON POWER DDR5
+('comp-silicon-power-val-ddr5-32gb-5200', 'Silicon Power Value 32GB (2x16GB) DDR5 5200MHz', 'Silicon Power', 'Value 32GB DDR5', 'silicon-power-val-ddr5-32gb-5200', 79.99, 50, 'https://via.placeholder.com/400x300?text=Silicon+Power+DDR5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-5200", "memoryType": "DDR5", "latency": "CL40", "voltage": "1.25V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW()),
+
+-- SAMSUNG DDR5
+('comp-samsung-ddr5-32gb-4800', 'Samsung DDR5 32GB (2x16GB) 4800MHz', 'Samsung', 'DDR5 32GB', 'samsung-ddr5-32gb-4800', 89.99, 40, 'https://via.placeholder.com/400x300?text=Samsung+DDR5', '{"capacity": "32GB (2x16GB)", "speed": "DDR5-4800", "memoryType": "DDR5", "latency": "CL40", "voltage": "1.1V", "rgb": false}', NULL, NULL, true, false, 'cat-ram', NOW(), NOW())
+ON CONFLICT (id) DO UPDATE SET
+  price = EXCLUDED.price,
+  stock = EXCLUDED.stock,
+  "isFeatured" = EXCLUDED."isFeatured",
+  "updatedAt" = NOW();
+`;
+
+  try {
+    await pool.query(sql);
+    console.log('RAM products inserted successfully!');
+    
+    // Count inserted
+    const result = await pool.query("SELECT COUNT(*) FROM components WHERE \"categoryId\" = 'cat-ram'");
+    console.log(`Total RAM products in database: ${result.rows[0].count}`);
+  } catch (error) {
+    console.error('Error inserting RAM products:', error);
+  } finally {
+    await pool.end();
+  }
+}
+
+insertRam();
