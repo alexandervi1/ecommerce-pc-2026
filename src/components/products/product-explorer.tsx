@@ -226,7 +226,7 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
       {/* Main Content */}
       <div className="lg:col-span-3 space-y-6">
         {/* Toolbar */}
-        <div className="glass rounded-3xl p-4 flex flex-col sm:flex-row items-center justify-between border-white/5 backdrop-blur-xl bg-white/2 gap-4">
+        <div className="glass rounded-3xl p-4 flex flex-col sm:flex-row items-center justify-between border-white/5 backdrop-blur-xl bg-white/2 gap-4 relative z-10">
           <div className="flex items-center gap-4">
             <div className="p-2.5 bg-white/5 rounded-2xl border border-white/10">
               <Monitor className="h-5 w-5 text-primary" />
