@@ -152,7 +152,7 @@ export default function AdminCategoriesPage() {
                 </Link>
               </div>
               <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">
-                Sectores <span className="text-violet-400">de Catálogo</span>
+                Gestión de <span className="text-violet-400">Categorías</span>
               </h1>
               <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
                 {categories.length} CATEGORÍAS EN EL SISTEMA

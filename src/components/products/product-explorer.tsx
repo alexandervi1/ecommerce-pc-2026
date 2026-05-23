@@ -127,7 +127,7 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
 
           {/* Search */}
           <div className="space-y-4">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Búsqueda Táctica</label>
+            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Buscar</label>
             <div className="relative group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 group-focus-within:text-primary transition-colors" />
               <input
@@ -150,7 +150,7 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
 
           {/* Categories */}
           <div className="space-y-4">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Sectores</label>
+            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Categorías</label>
             <div className="space-y-1.5 max-h-72 overflow-y-auto pr-2 custom-scrollbar">
               {categories.map((category) => (
                 <button
@@ -205,7 +205,7 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
 
           {/* Availability */}
           <div className="space-y-4">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Logística</label>
+            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Disponibilidad</label>
             <button
               onClick={() => setShowInStock(!showInStock)}
               className={`flex items-center justify-between w-full px-5 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
@@ -232,9 +232,9 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
               <Monitor className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-0.5">Arsenal Desplegado</p>
+              <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-0.5">Resultados</p>
               <p className="text-sm text-white font-medium">
-                <span className="font-black text-primary">{filteredProducts.length}</span> unidades localizadas
+                <span className="font-black text-primary">{filteredProducts.length}</span> productos encontrados
               </p>
             </div>
           </div>
@@ -304,7 +304,7 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
               <Monitor className="h-12 w-12 text-gray-600" />
             </div>
             <div className="space-y-3 relative z-10">
-              <h3 className="text-2xl font-black text-white uppercase tracking-wider">Arsenal Localizado Vacío</h3>
+              <h3 className="text-2xl font-black text-white uppercase tracking-wider">Sin resultados</h3>
               <p className="text-gray-500 max-w-sm mx-auto text-sm leading-relaxed font-medium">
                 No hemos detectado componentes con las coordenadas proporcionadas. Reajusta tus parámetros de búsqueda.
               </p>
@@ -313,7 +313,7 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
               onClick={clearFilters}
               className="relative group px-8 py-3 bg-white/5 hover:bg-primary/20 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] border border-white/10 hover:border-primary/50 transition-all duration-500"
             >
-              Restablecer Escaneo
+              Limpiar filtros
             </button>
           </div>
         ) : (

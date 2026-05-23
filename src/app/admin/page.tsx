@@ -74,7 +74,7 @@ export default function AdminDashboard() {
             <Activity className="h-6 w-6 text-primary/50" />
           </div>
         </div>
-        <p className="mt-6 text-gray-500 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Sincronizando Base de Control...</p>
+        <p className="mt-6 text-gray-500 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Cargando panel de administración...</p>
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function AdminDashboard() {
             </div>
             <div>
               <h1 className="text-3xl font-black text-white tracking-tight uppercase">Base de <span className="text-primary">Control</span></h1>
-              <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Nivel de Acceso: Administrador • {session?.user?.name}</p>
+              <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Administrador • {session?.user?.name}</p>
             </div>
           </div>
           <div className="flex items-center gap-3 bg-white/5 p-2 rounded-2xl border border-white/10">
@@ -160,7 +160,7 @@ export default function AdminDashboard() {
           <div className="lg:col-span-2 space-y-8">
             <Card className="border-white/5">
               <div className="flex items-center justify-between mb-8">
-                <h3 className="text-lg font-black text-white uppercase tracking-tight">Módulos de Sistema</h3>
+                <h3 className="text-lg font-black text-white uppercase tracking-tight">Módulos</h3>
                 <Badge variant="success" dot>Operativo</Badge>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                   ))
                 ) : (
                   <div className="py-8 text-center text-gray-500 font-bold uppercase tracking-widest text-xs">
-                    Arsenal Completo - Sin Alertas
+                    Sin productos con stock bajo
                   </div>
                 )}
               </div>

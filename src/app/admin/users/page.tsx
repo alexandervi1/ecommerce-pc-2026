@@ -111,8 +111,8 @@ export default function AdminUsersPage() {
               <div className="flex items-center gap-3 mb-1">
                 <Link href="/admin" className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] hover:text-white transition-colors">← Volver a Base</Link>
               </div>
-              <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">Base de <span className="text-emerald-500">Operadores</span></h1>
-              <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">{users.length} PERFILES ACTIVOS EN EL SISTEMA</p>
+              <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">Gestión de <span className="text-emerald-500">Usuarios</span></h1>
+              <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">{users.length} USUARIOS REGISTRADOS</p>
             </div>
           </div>
 
@@ -121,7 +121,7 @@ export default function AdminUsersPage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 group-focus-within:text-emerald-500 transition-colors" />
               <input
                 type="text"
-                placeholder="BUSCAR OPERADOR..."
+                placeholder="BUSCAR USUARIO..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-emerald-500/50 transition-all"
@@ -144,13 +144,13 @@ export default function AdminUsersPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24">
-            <LoadingSpinner text="ESCANEO DE BIOMETRÍA..." />
+            <LoadingSpinner text="CARGANDO USUARIOS..." />
           </div>
         ) : users.length === 0 ? (
           <EmptyState
             icon={Users}
-            title="Sin Operadores"
-            description="No se han detectado perfiles en la base de datos."
+            title="Sin usuarios"
+            description="No hay usuarios registrados en el sistema."
           />
         ) : (
           <div className="glass rounded-[40px] overflow-hidden border-white/5">
@@ -158,8 +158,8 @@ export default function AdminUsersPage() {
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b border-white/5 bg-white/[0.02]">
-                    <th className="px-8 py-6 text-left text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Identidad</th>
-                    <th className="px-8 py-6 text-left text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Privilegios</th>
+                    <th className="px-8 py-6 text-left text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Usuario</th>
+                    <th className="px-8 py-6 text-left text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Rol</th>
                     <th className="px-8 py-6 text-left text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Actividad</th>
                     <th className="px-8 py-6 text-left text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Registro</th>
                     <th className="px-8 py-6 text-right text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Acciones</th>
@@ -174,7 +174,7 @@ export default function AdminUsersPage() {
                             <UserCircle className="h-7 w-7 text-gray-600" />
                           </div>
                           <div>
-                            <p className="font-black text-white text-sm uppercase tracking-tight">{user.name || "Sin Identificar"}</p>
+                            <p className="font-black text-white text-sm uppercase tracking-tight">{user.name || "Sin nombre"}</p>
                             <p className="text-[10px] text-gray-500 font-bold lowercase tracking-wider">{user.email}</p>
                           </div>
                         </div>
@@ -227,7 +227,7 @@ export default function AdminUsersPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="MODIFICAR PERFIL DE OPERADOR"
+        title="EDITAR USUARIO"
         size="sm"
       >
         <form onSubmit={handleSubmit} className="space-y-6 py-4">
@@ -239,7 +239,7 @@ export default function AdminUsersPage() {
           />
 
           <Select
-            label="NIVEL DE PRIVILEGIOS"
+            label="ROL"
             value={formData.role}
             onChange={(e) => setFormData({ ...formData, role: e.target.value as any })}
             options={[
@@ -251,7 +251,7 @@ export default function AdminUsersPage() {
 
           <div className="flex justify-end gap-4 pt-6">
             <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)} className="text-gray-500 uppercase font-black text-[10px] tracking-widest">
-              ABORTAR
+              CANCELAR
             </Button>
             <Button type="submit" variant="accent" isLoading={saving} className="px-8 shadow-[0_0_20px_rgba(244,63,94,0.3)]">
               GUARDAR CAMBIOS

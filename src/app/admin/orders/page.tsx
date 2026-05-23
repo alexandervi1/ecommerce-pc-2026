@@ -122,8 +122,8 @@ export default function AdminOrdersPage() {
               <div className="flex items-center gap-3 mb-1">
                 <Link href="/admin" className="text-[10px] font-black text-primary uppercase tracking-[0.3em] hover:text-white transition-colors">← Volver a Base</Link>
               </div>
-              <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">Logística <span className="text-primary">Pedidos</span></h1>
-              <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">{orders.length} OPERACIONES REGISTRADAS</p>
+              <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">Gestión de <span className="text-primary">Pedidos</span></h1>
+              <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">{orders.length} PEDIDOS REGISTRADOS</p>
             </div>
           </div>
 
@@ -145,13 +145,13 @@ export default function AdminOrdersPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24">
-            <LoadingSpinner text="RASTREANDO ENVÍOS..." />
+            <LoadingSpinner text="CARGANDO PEDIDOS..." />
           </div>
         ) : orders.length === 0 ? (
           <EmptyState
             icon={ShoppingCart}
-            title="Sin Operaciones"
-            description="No se han detectado transacciones en el sector."
+            title="Sin pedidos"
+            description="Aún no hay pedidos registrados en el sistema."
           />
         ) : (
           <div className="grid gap-6">
@@ -195,14 +195,14 @@ export default function AdminOrdersPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={`MANIFIESTO: ${selectedOrder?.orderNumber}`}
+        title={`PEDIDO: ${selectedOrder?.orderNumber}`}
         size="lg"
       >
         {selectedOrder && (
           <div className="space-y-10 py-4">
             <div className="flex flex-col md:flex-row items-center gap-6 p-6 glass rounded-2xl border-primary/20 bg-primary/5">
               <div className="flex-1">
-                <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">Estado de Despliegue</p>
+                <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">Estado del Pedido</p>
                 <p className="text-lg font-black text-white uppercase italic">
                   {getStatusLabel(selectedOrder.status)}
                 </p>
@@ -230,7 +230,7 @@ export default function AdminOrdersPage() {
               </div>
 
               <div className="space-y-4">
-                <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">Coordenadas de Entrega</h4>
+                <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">Dirección de Entrega</h4>
                 <div className="glass p-5 rounded-2xl border-white/5 space-y-1">
                   <p className="text-sm font-black text-white uppercase">{selectedOrder.shippingAddress.fullName}</p>
                   <p className="text-xs text-gray-400 font-medium leading-relaxed">
@@ -243,7 +243,7 @@ export default function AdminOrdersPage() {
             </div>
 
             <div className="space-y-6">
-              <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">Inventario Transferido</h4>
+              <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">Productos del Pedido</h4>
               <div className="space-y-4">
                 {selectedOrder.items.map((item) => (
                   <div key={item.id} className="flex items-center gap-6 p-4 glass rounded-2xl border-white/5 group hover:bg-white/[0.02] transition-all">
@@ -266,10 +266,10 @@ export default function AdminOrdersPage() {
 
             <div className="border-t border-white/5 pt-8 flex justify-between items-end">
               <div>
-                <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-1">Valor Total de Manifiesto</p>
+                <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-1">Total del Pedido</p>
                 <p className="text-3xl font-black text-primary tracking-tighter italic">{formatPrice(Number(selectedOrder.total))}</p>
               </div>
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Protocolo KelectronicaEC</p>
+              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">KelectronicaEC</p>
             </div>
 
             {selectedOrder.notes && (
