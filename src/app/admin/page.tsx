@@ -168,7 +168,6 @@ export default function AdminDashboard() {
                   { label: "Pedidos", href: "/admin/orders", icon: <ShoppingCart />, color: "text-emerald-400" },
                   { label: "Usuarios", href: "/admin/users", icon: <Users />, color: "text-purple-400" },
                   { label: "Configuración", href: "/admin/settings", icon: <Settings />, color: "text-gray-400" },
-                  { label: "Auditoría", href: "/audit", icon: <Activity />, color: "text-amber-400" },
                 ].map((mod) => (
                   <Link key={mod.label} href={mod.href}>
                     <div className="glass p-6 rounded-2xl border-white/5 hover:border-primary/50 transition-all text-center group">
@@ -226,14 +225,9 @@ export default function AdminDashboard() {
 
             <Card className="bg-gradient-to-br from-primary/20 to-accent/20 border-white/10">
               <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em] mb-2">Protocolos de Seguridad</h3>
-              <p className="text-[11px] text-gray-400 leading-relaxed mb-6 font-medium">
-                Cifrado de grado militar activo. Todas las terminales de acceso están siendo monitoreadas por el sistema de auditoría central.
+              <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
+                Cifrado de grado militar activo. Todas las operaciones son registradas y monitoreadas de forma independiente por el equipo de auditoría.
               </p>
-              <Link href="/audit">
-                <Button variant="secondary" fullWidth size="sm" className="text-[9px] py-3">
-                  Consultar Registro de Eventos
-                </Button>
-              </Link>
             </Card>
           </div>
         </div>

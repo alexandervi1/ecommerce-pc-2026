@@ -53,8 +53,8 @@ export default async function AuditPage({
 }) {
   const session = await auth();
 
-  if (!session?.user || (session.user.role !== "ADMIN" && session.user.role !== "AUDITOR")) {
-    redirect("/");
+  if (!session?.user || session.user.role !== "AUDITOR") {
+    redirect("/login");
   }
 
   const params = await searchParams;
