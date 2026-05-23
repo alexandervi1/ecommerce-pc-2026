@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { query, execute } from "@/lib/db";
+import { query, execute, table } from "@/lib/db";
 import { z } from "zod";
 
 const createComponentSchema = z.object({
@@ -37,9 +37,9 @@ export async function GET(request: Request) {
 
     if (id) {
       const component = await query(
-        `SELECT c.*, cc.name as "categoryName", cc.type as "categoryType" 
-         FROM components c 
-         LEFT JOIN component_categories cc ON c."categoryId" = cc.id 
+        `SELECT c.*, cc.name as "categoryName", cc.type as "categoryType"
+         FROM ${table("components")} c
+         LEFT JOIN ${table("component_categories")} cc ON c."categoryId" = cc.id
          WHERE c.id = $1`,
         [id]
       );
@@ -49,9 +49,9 @@ export async function GET(request: Request) {
       return NextResponse.json(component[0]);
     }
 
-    let sql = `SELECT c.*, cc.name as "categoryName", cc.type as "categoryType" 
-               FROM components c 
-               LEFT JOIN component_categories cc ON c."categoryId" = cc.id 
+    let sql = `SELECT c.*, cc.name as "categoryName", cc.type as "categoryType"
+               FROM ${table("components")} c
+               LEFT JOIN ${table("component_categories")} cc ON c."categoryId" = cc.id
                WHERE 1=1`;
     const params: unknown[] = [];
     let paramIndex = 1;
@@ -100,7 +100,7 @@ export async function POST(request: Request) {
     const id = `comp-${slug}-${Date.now()}`;
 
     await execute(
-      `INSERT INTO components (id, name, brand, model, slug, description, price, stock, image, "categoryId", specifications, "socketType", wattage, "isActive", "isFeatured", "createdAt", "updatedAt") 
+      `INSERT INTO ${table("components")} (id, name, brand, model, slug, description, price, stock, image, "categoryId", specifications, "socketType", wattage, "isActive", "isFeatured", "createdAt", "updatedAt")
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, NOW(), NOW())`,
       [
         id,
@@ -122,7 +122,7 @@ export async function POST(request: Request) {
     );
 
     const component = await query(
-      `SELECT c.*, cc.name as "categoryName" FROM components c LEFT JOIN component_categories cc ON c."categoryId" = cc.id WHERE c.id = $1`,
+      `SELECT c.*, cc.name as "categoryName" FROM ${table("components")} c LEFT JOIN ${table("component_categories")} cc ON c."categoryId" = cc.id WHERE c.id = $1`,
       [id]
     );
     return NextResponse.json(component[0], { status: 201 });
@@ -213,12 +213,12 @@ export async function PUT(request: Request) {
     params.push(id);
 
     await execute(
-      `UPDATE components SET ${updates.join(", ")} WHERE id = $${paramIndex}`,
+      `UPDATE ${table("components")} SET ${updates.join(", ")} WHERE id = $${paramIndex}`,
       params
     );
 
     const component = await query(
-      `SELECT c.*, cc.name as "categoryName" FROM components c LEFT JOIN component_categories cc ON c."categoryId" = cc.id WHERE c.id = $1`,
+      `SELECT c.*, cc.name as "categoryName" FROM ${table("components")} c LEFT JOIN ${table("component_categories")} cc ON c."categoryId" = cc.id WHERE c.id = $1`,
       [id]
     );
     if (component.length === 0) {
@@ -248,7 +248,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "ID de componente requerido" }, { status: 400 });
     }
 
-    await execute("DELETE FROM components WHERE id = $1", [id]);
+    await execute(`DELETE FROM ${table("components")} WHERE id = $1`, [id]);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting component:", error);

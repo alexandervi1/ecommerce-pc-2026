@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { query, execute } from "@/lib/db";
+import { query, execute, table } from "@/lib/db";
 import { z } from "zod";
 
 const updateUserSchema = z.object({
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
     if (id) {
       const user = await query(
-        `SELECT id, name, email, role, "createdAt" FROM users WHERE id = $1`,
+        `SELECT id, name, email, role, "createdAt" FROM ${table("users")} WHERE id = $1`,
         [id]
       );
       if (user.length === 0) {
@@ -33,24 +33,24 @@ export async function GET(request: Request) {
       return NextResponse.json(user[0]);
     }
 
-    let sql = `SELECT id, name, email, role, "createdAt", 
-               (SELECT COUNT(*) FROM orders WHERE "userId" = users.id) as "orderCount"
-               FROM users WHERE 1=1`;
+    let sql = `SELECT id, name, email, role, "createdAt",
+               (SELECT COUNT(*) FROM ${table("orders")} WHERE "userId" = u.id) as "orderCount"
+               FROM ${table("users")} u WHERE 1=1`;
     const params: unknown[] = [];
     let paramIndex = 1;
 
     if (search) {
-      sql += ` AND (name ILIKE $${paramIndex} OR email ILIKE $${paramIndex})`;
+      sql += ` AND (u.name ILIKE $${paramIndex} OR u.email ILIKE $${paramIndex})`;
       params.push(`%${search}%`);
       paramIndex++;
     }
 
     if (role) {
-      sql += ` AND role = $${paramIndex++}`;
+      sql += ` AND u.role = $${paramIndex++}`;
       params.push(role);
     }
 
-    sql += ` ORDER BY "createdAt" DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`;
+    sql += ` ORDER BY u."createdAt" DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`;
     params.push(parseInt(limit), parseInt(offset));
 
     const users = await query(sql, params);
@@ -99,12 +99,12 @@ export async function PUT(request: Request) {
     params.push(id);
 
     await execute(
-      `UPDATE users SET ${updates.join(", ")} WHERE id = $${paramIndex}`,
+      `UPDATE ${table("users")} SET ${updates.join(", ")} WHERE id = $${paramIndex}`,
       params
     );
 
     const user = await query(
-      `SELECT id, name, email, role, "createdAt" FROM users WHERE id = $1`,
+      `SELECT id, name, email, role, "createdAt" FROM ${table("users")} WHERE id = $1`,
       [id]
     );
     if (user.length === 0) {
@@ -139,7 +139,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "No puedes eliminarte a ti mismo" }, { status: 400 });
     }
 
-    await execute("DELETE FROM users WHERE id = $1", [id]);
+    await execute(`DELETE FROM ${table("users")} WHERE id = $1`, [id]);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting user:", error);

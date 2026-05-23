@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { query, execute } from "@/lib/db";
+import { query, execute, table } from "@/lib/db";
 import { z } from "zod";
 
 const updateOrderStatusSchema = z.object({
@@ -22,9 +22,9 @@ export async function GET(request: Request) {
 
     if (id) {
       const order = await query(
-        `SELECT o.*, u.name as "userName", u.email as "userEmail", u.phone as "userPhone"
-         FROM orders o 
-         LEFT JOIN users u ON o."userId" = u.id 
+        `SELECT o.*, u.name as "userName", u.email as "userEmail"
+         FROM ${table("orders")} o
+         LEFT JOIN ${table("users")} u ON o."userId" = u.id
          WHERE o.id = $1`,
         [id]
       );
@@ -34,8 +34,8 @@ export async function GET(request: Request) {
 
     const items = await query(
       `SELECT oi.*, p.name as "productName", p.image as "productImage"
-       FROM order_items oi
-       LEFT JOIN products p ON oi."productId" = p.id
+       FROM ${table("order_items")} oi
+       LEFT JOIN ${table("products")} p ON oi."productId" = p.id
        WHERE oi."orderId" = $1`,
       [id]
     );
@@ -46,9 +46,9 @@ export async function GET(request: Request) {
     return NextResponse.json({ ...orderData, items: itemsData });
     }
 
-    let sql = `SELECT o.*, u.name as "userName", u.email as "userEmail" 
-               FROM orders o 
-               LEFT JOIN users u ON o."userId" = u.id 
+    let sql = `SELECT o.*, u.name as "userName", u.email as "userEmail"
+               FROM ${table("orders")} o
+               LEFT JOIN ${table("users")} u ON o."userId" = u.id
                WHERE 1=1`;
     const params: unknown[] = [];
     let paramIndex = 1;
@@ -87,11 +87,11 @@ export async function PUT(request: Request) {
     const data = updateOrderStatusSchema.parse(body);
 
     await execute(
-      `UPDATE orders SET status = $1, "updatedAt" = NOW() WHERE id = $2`,
+      `UPDATE ${table("orders")} SET status = $1, "updatedAt" = NOW() WHERE id = $2`,
       [data.status, id]
     );
 
-    const order = await query("SELECT * FROM orders WHERE id = $1", [id]);
+    const order = await query(`SELECT * FROM ${table("orders")} WHERE id = $1`, [id]);
     if (order.length === 0) {
       return NextResponse.json({ error: "Pedido no encontrado" }, { status: 404 });
     }
@@ -120,8 +120,8 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "ID de pedido requerido" }, { status: 400 });
     }
 
-    await execute("DELETE FROM order_items WHERE \"orderId\" = $1", [id]);
-    await execute("DELETE FROM orders WHERE id = $1", [id]);
+    await execute(`DELETE FROM ${table("order_items")} WHERE "orderId" = $1`, [id]);
+    await execute(`DELETE FROM ${table("orders")} WHERE id = $1`, [id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {
