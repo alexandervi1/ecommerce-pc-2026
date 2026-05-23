@@ -320,12 +320,14 @@ export async function createAuditLog(data: {
   newValue?: Record<string, unknown>;
   userId?: string;
   userEmail?: string;
+  ipAddress?: string;
+  userAgent?: string;
   error?: string;
   status?: string;
 }): Promise<void> {
   await execute(
     `INSERT INTO ${table("audit_logs")} (id, action, entity, "entityId", "oldValue", "newValue", "userId", "userEmail", "ipAddress", "userAgent", error, status, "createdAt")
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'unknown', 'unknown', $9, $10, NOW())`,
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())`,
     [
       uuidv4(),
       data.action,
@@ -335,6 +337,8 @@ export async function createAuditLog(data: {
       data.newValue ? JSON.stringify(data.newValue) : null,
       data.userId || null,
       data.userEmail || null,
+      data.ipAddress || "unknown",
+      data.userAgent || "unknown",
       data.error || null,
       data.status || "SUCCESS",
     ]

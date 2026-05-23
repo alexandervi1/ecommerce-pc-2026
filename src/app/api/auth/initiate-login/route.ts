@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
 import { compare } from "bcryptjs";
 import { queryOne, execute, table } from "@/lib/db";
+import { createAuditLog } from "@/lib/repositories";
+import { getClientIP, getUserAgent } from "@/lib/audit";
 
 function generateOtp(): string {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 export async function POST(request: Request) {
+  const ip = getClientIP(request);
+  const userAgent = getUserAgent(request);
+
   try {
     const { email, password } = await request.json();
 
@@ -26,12 +31,31 @@ export async function POST(request: Request) {
     );
 
     if (!user || !user.password) {
-      // Don't reveal whether the email exists
+      await createAuditLog({
+        action: "FAILED_LOGIN",
+        entity: "User",
+        userEmail: email,
+        ipAddress: ip,
+        userAgent,
+        status: "FAILED",
+        error: "Email no encontrado",
+      });
       return NextResponse.json({ error: "Credenciales inválidas" }, { status: 401 });
     }
 
     const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
+      await createAuditLog({
+        action: "FAILED_LOGIN",
+        entity: "User",
+        entityId: user.id,
+        userEmail: email,
+        userId: user.id,
+        ipAddress: ip,
+        userAgent,
+        status: "FAILED",
+        error: "Contraseña incorrecta",
+      });
       return NextResponse.json({ error: "Credenciales inválidas" }, { status: 401 });
     }
 
@@ -48,6 +72,17 @@ export async function POST(request: Request) {
       `INSERT INTO ${table("otp_codes")} (user_id, email, code, expires_at) VALUES ($1, $2, $3, $4)`,
       [user.id, user.email, code, expiresAt.toISOString()]
     );
+
+    await createAuditLog({
+      action: "OTP_GENERATED",
+      entity: "User",
+      entityId: user.id,
+      userId: user.id,
+      userEmail: user.email,
+      ipAddress: ip,
+      userAgent,
+      status: "SUCCESS",
+    });
 
     // In production this code would be sent via email/SMS.
     // For demo purposes we return it directly so it can be displayed.

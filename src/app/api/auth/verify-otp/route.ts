@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 import { queryOne, execute, table } from "@/lib/db";
+import { createAuditLog } from "@/lib/repositories";
+import { getClientIP, getUserAgent } from "@/lib/audit";
 
 export async function POST(request: Request) {
+  const ip = getClientIP(request);
+  const userAgent = getUserAgent(request);
+
   try {
     const { email, code } = await request.json();
 
@@ -25,14 +30,45 @@ export async function POST(request: Request) {
     );
 
     if (!otpRecord) {
+      await createAuditLog({
+        action: "OTP_FAILED",
+        entity: "User",
+        userEmail: email,
+        ipAddress: ip,
+        userAgent,
+        status: "FAILED",
+        error: "Código OTP inválido o expirado",
+      });
       return NextResponse.json({ error: "Código inválido o expirado" }, { status: 401 });
     }
 
     if (new Date(otpRecord.expires_at) < new Date()) {
+      await createAuditLog({
+        action: "OTP_FAILED",
+        entity: "User",
+        entityId: otpRecord.user_id,
+        userEmail: email,
+        userId: otpRecord.user_id,
+        ipAddress: ip,
+        userAgent,
+        status: "FAILED",
+        error: "Código OTP expirado",
+      });
       return NextResponse.json({ error: "El código OTP ha expirado" }, { status: 401 });
     }
 
     if (otpRecord.code !== code.trim()) {
+      await createAuditLog({
+        action: "OTP_FAILED",
+        entity: "User",
+        entityId: otpRecord.user_id,
+        userEmail: email,
+        userId: otpRecord.user_id,
+        ipAddress: ip,
+        userAgent,
+        status: "FAILED",
+        error: "Código OTP incorrecto",
+      });
       return NextResponse.json({ error: "Código incorrecto" }, { status: 401 });
     }
 
@@ -50,6 +86,17 @@ export async function POST(request: Request) {
       `INSERT INTO ${table("otp_tokens")} (user_id, token, expires_at) VALUES ($1, $2, $3)`,
       [otpRecord.user_id, oneTimeToken, expiresAt.toISOString()]
     );
+
+    await createAuditLog({
+      action: "OTP_VERIFIED",
+      entity: "User",
+      entityId: otpRecord.user_id,
+      userId: otpRecord.user_id,
+      userEmail: email,
+      ipAddress: ip,
+      userAgent,
+      status: "SUCCESS",
+    });
 
     return NextResponse.json({ verified: true, token: oneTimeToken });
   } catch (error) {

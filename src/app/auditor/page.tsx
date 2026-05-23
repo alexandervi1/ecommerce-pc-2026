@@ -5,7 +5,7 @@ import { query, queryOne, table } from "@/lib/db";
 import { Badge } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
-import { Shield, Activity, AlertTriangle } from "lucide-react";
+import { Shield, Activity, AlertTriangle, LogIn, XCircle, Clock, TrendingUp } from "lucide-react";
 
 export default async function AuditorDashboard() {
   const session = await auth();
@@ -95,6 +95,55 @@ export default async function AuditorDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {[
+            {
+              label: "Logs Totales",
+              value: stats?.total_logs ?? "0",
+              icon: Activity,
+              color: "text-blue-400",
+              bg: "bg-blue-500/10",
+              border: "border-blue-500/20",
+            },
+            {
+              label: "Logins Hoy",
+              value: stats?.logins_today ?? "0",
+              icon: LogIn,
+              color: "text-emerald-400",
+              bg: "bg-emerald-500/10",
+              border: "border-emerald-500/20",
+            },
+            {
+              label: "Fallos de Login",
+              value: stats?.failed_logins ?? "0",
+              icon: XCircle,
+              color: "text-accent",
+              bg: "bg-accent/10",
+              border: "border-accent/20",
+            },
+            {
+              label: "Errores Pendientes",
+              value: stats?.unresolved_errors ?? "0",
+              icon: AlertTriangle,
+              color: "text-amber-400",
+              bg: "bg-amber-500/10",
+              border: "border-amber-500/20",
+            },
+          ].map((stat) => (
+            <div key={stat.label} className={`glass p-6 rounded-[24px] border ${stat.border} flex items-center gap-4`}>
+              <div className={`p-3 ${stat.bg} rounded-xl shrink-0`}>
+                <stat.icon className={`w-5 h-5 ${stat.color}`} />
+              </div>
+              <div>
+                <p className="text-[9px] font-black text-gray-500 uppercase tracking-widest">{stat.label}</p>
+                <p className={`text-2xl font-black ${stat.color} leading-none mt-1`}>{stat.value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="glass p-8 rounded-[32px] border-white/5 h-fit">
             <div className="flex items-center justify-between mb-8">

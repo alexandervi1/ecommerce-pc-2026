@@ -1,5 +1,6 @@
 import { auth } from "./auth";
 import { queryOne, table } from "./db";
+import { createAuditLog } from "./repositories";
 import { NextResponse } from "next/server";
 import type { Session } from "next-auth";
 
@@ -12,7 +13,7 @@ type GuardResult =
  * Returns the session if valid, or a 401 NextResponse if the session was
  * invalidated because the user logged in from another device/browser.
  */
-export async function guardSession(): Promise<GuardResult> {
+export async function guardSession(request?: Request): Promise<GuardResult> {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -35,6 +36,24 @@ export async function guardSession(): Promise<GuardResult> {
   }
 
   if (dbUser.session_version !== session.user.sessionVersion) {
+    // Log the session replacement event for audit trail
+    const ip = request?.headers.get("x-forwarded-for")?.split(",")[0].trim()
+      ?? request?.headers.get("x-real-ip")
+      ?? "unknown";
+    const userAgent = request?.headers.get("user-agent") ?? "unknown";
+
+    await createAuditLog({
+      action: "SESSION_REPLACED",
+      entity: "User",
+      entityId: session.user.id,
+      userId: session.user.id,
+      userEmail: session.user.email,
+      ipAddress: ip,
+      userAgent,
+      status: "FAILED",
+      error: "Sesión invalidada por nuevo inicio de sesión en otro dispositivo",
+    }).catch(() => {}); // Non-blocking — don't fail the request if logging fails
+
     return {
       session: null,
       error: NextResponse.json(
