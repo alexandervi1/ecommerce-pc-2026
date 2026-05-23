@@ -107,6 +107,14 @@ export function Header() {
                       Panel Admin
                     </Link>
                   )}
+                  {session.user.role === "AUDITOR" && (
+                    <Link
+                      href="/auditor"
+                      className="block px-4 py-2 text-sm text-amber-400 hover:bg-amber-400/10 transition"
+                    >
+                      Consola de Auditoría
+                    </Link>
+                  )}
                   <div className="border-t border-white/10 mt-2 pt-2">
                     <button
                       onClick={() => signOut()}
