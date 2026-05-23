@@ -1,4 +1,5 @@
 import { query, queryOne, execute, table } from "./db";
+import { v4 as uuidv4 } from "uuid";
 
 export interface Product {
   id: string;
@@ -219,11 +220,12 @@ export async function getUserById(id: string): Promise<User | null> {
 }
 
 export async function createUser(data: { name: string; email: string; password: string }): Promise<string> {
+  const id = uuidv4();
   const result = await queryOne<{ id: string }>(
-    `INSERT INTO ${table("users")} (name, email, password, role, "createdAt", "updatedAt") 
-     VALUES ($1, $2, $3, 'CLIENT', NOW(), NOW()) 
+    `INSERT INTO ${table("users")} (id, name, email, password, role, "createdAt", "updatedAt")
+     VALUES ($1, $2, $3, $4, 'CLIENT', NOW(), NOW())
      RETURNING id`,
-    [data.name, data.email, data.password]
+    [id, data.name, data.email, data.password]
   );
   return result!.id;
 }
@@ -322,9 +324,10 @@ export async function createAuditLog(data: {
   status?: string;
 }): Promise<void> {
   await execute(
-    `INSERT INTO ${table("audit_logs")} (action, entity, "entityId", "oldValue", "newValue", "userId", "userEmail", "ipAddress", "userAgent", error, status, "createdAt") 
-     VALUES ($1, $2, $3, $4, $5, $6, $7, 'unknown', 'unknown', $8, $9, NOW())`,
+    `INSERT INTO ${table("audit_logs")} (id, action, entity, "entityId", "oldValue", "newValue", "userId", "userEmail", "ipAddress", "userAgent", error, status, "createdAt")
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'unknown', 'unknown', $9, $10, NOW())`,
     [
+      uuidv4(),
       data.action,
       data.entity,
       data.entityId || null,
