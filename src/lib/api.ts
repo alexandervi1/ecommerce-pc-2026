@@ -77,6 +77,14 @@ export const adminApi = {
     update: (id: string, data: unknown) => api.put(`/api/admin/users?id=${id}`, data),
     delete: (id: string) => api.delete(`/api/admin/users?id=${id}`),
   },
+  categories: {
+    list: (params?: { search?: string }) =>
+      api.get(`/api/admin/categories?${new URLSearchParams(params as Record<string, string>)}`),
+    get: (id: string) => api.get(`/api/admin/categories?id=${id}`),
+    create: (data: unknown) => api.post("/api/admin/categories", data),
+    update: (id: string, data: unknown) => api.put(`/api/admin/categories?id=${id}`, data),
+    delete: (id: string) => api.delete(`/api/admin/categories?id=${id}`),
+  },
   analytics: {
     get: (period?: number) => api.get(`/api/admin/analytics?period=${period || 30}`),
   },

@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { 
-  Package, ShoppingCart, DollarSign, Users, 
+import {
+  Package, ShoppingCart, DollarSign, Users, Tag,
   TrendingUp, TrendingDown, AlertTriangle,
   ArrowRight, ShoppingBag, Activity, Settings, LayoutDashboard, Loader2
 } from "lucide-react";
@@ -165,6 +165,7 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {[
                   { label: "Productos", href: "/admin/products", icon: <Package />, color: "text-blue-400" },
+                  { label: "Categorías", href: "/admin/categories", icon: <Tag />, color: "text-violet-400" },
                   { label: "Pedidos", href: "/admin/orders", icon: <ShoppingCart />, color: "text-emerald-400" },
                   { label: "Usuarios", href: "/admin/users", icon: <Users />, color: "text-purple-400" },
                   { label: "Configuración", href: "/admin/settings", icon: <Settings />, color: "text-gray-400" },
