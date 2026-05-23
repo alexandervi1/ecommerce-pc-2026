@@ -126,7 +126,7 @@ export default async function AuditPage({
             </div>
             <div>
               <div className="flex items-center gap-3 mb-1">
-                <Link href={session.user.role === "ADMIN" ? "/admin" : "/"} className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] hover:text-white transition-colors">← Volver a Base</Link>
+                <Link href={session.user.role === "ADMIN" ? "/admin" : "/auditor"} className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] hover:text-white transition-colors">← Volver a Base</Link>
               </div>
               <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">Auditoría <span className="text-blue-500">Forense</span></h1>
               <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">MONITOREO DE ACTIVIDAD EN TIEMPO REAL</p>
