@@ -27,9 +27,9 @@ export default async function ProductPage({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumbs - Tactical Style */}
         <nav className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-muted mb-12">
-          <Link href="/" className="hover:text-white transition-colors">HQ</Link>
+          <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
           <ChevronRight className="h-3 w-3" />
-          <Link href="/products" className="hover:text-white transition-colors">Arsenal</Link>
+          <Link href="/products" className="hover:text-white transition-colors">Productos</Link>
           <ChevronRight className="h-3 w-3" />
           <span className="text-primary truncate max-w-[200px]">{product.name}</span>
         </nav>

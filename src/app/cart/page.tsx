@@ -16,13 +16,13 @@ export default function CartPage() {
           <div className="space-y-4">
             <Link href="/products" className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 hover:text-white transition-all group mb-6">
               <ChevronLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-              Volver al Arsenal
+              Volver a Productos
             </Link>
             <h1 className="text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase italic leading-none">
-              Tu <span className="text-accent">Arsenal</span>
+              Tu <span className="text-accent">Carrito</span>
             </h1>
             <p className="text-gray-400 text-xs font-bold uppercase tracking-widest leading-relaxed max-w-lg">
-              CONFIGURACIÓN TÁCTICA LISTA PARA DESPLIEGUE OPERATIVO.
+              Revisa tus productos antes de proceder al pago.
             </p>
           </div>
           
@@ -44,7 +44,7 @@ export default function CartPage() {
              <div className="w-32 h-32 bg-white/5 rounded-[40px] flex items-center justify-center mx-auto mb-10 border border-white/10 shadow-[0_0_50px_rgba(255,255,255,0.05)]">
                 <ShoppingCart className="h-12 w-12 text-gray-700" />
              </div>
-             <h2 className="text-4xl font-black text-white uppercase italic tracking-tight mb-6">Arsenal Vacío</h2>
+             <h2 className="text-4xl font-black text-white uppercase italic tracking-tight mb-6">Carrito Vacío</h2>
              <p className="text-gray-500 text-xs font-bold uppercase tracking-widest max-w-sm mx-auto mb-12 leading-relaxed">Explora nuestros productos y arma tu setup definitivo con hardware de alto nivel.</p>
              <Link href="/products">
                 <Button variant="accent" size="lg" className="!px-16 !py-8 rounded-2xl shadow-[0_0_30px_rgba(244,63,94,0.3)]">
@@ -123,7 +123,7 @@ export default function CartPage() {
                 
                 <div className="space-y-6 mb-12 relative z-10">
                   <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-gray-500">
-                    <span>Arsenal Seleccionado</span>
+                    <span>Resumen del pedido</span>
                     <span className="text-white">{itemCount} Unidades</span>
                   </div>
                   <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-gray-500">

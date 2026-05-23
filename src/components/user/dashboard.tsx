@@ -193,8 +193,8 @@ export function ClientDashboard() {
           {activeTab === "orders" && (
             <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
               <SectionHeader 
-                title="Historial de Arsenal" 
-                description="Rastrea y gestiona tus adquisiciones tecnológicas."
+                title="Historial de Pedidos"
+                description="Revisa y gestiona tus pedidos realizados."
               />
               
               {loadingOrders ? (
@@ -258,8 +258,8 @@ export function ClientDashboard() {
               ) : (
                 <EmptyState
                   icon={ShoppingBag}
-                  title="Arsenal Vacío"
-                  description="Aún no has realizado ningún pedido. Tu arsenal de hardware te está esperando en el catálogo."
+                  title="Sin pedidos"
+                  description="Aún no has realizado ningún pedido. Explora nuestro catálogo de productos."
                   actionLabel="Explorar Catálogo"
                   actionHref="/products"
                   className="border-dashed border-2 border-white/5 bg-transparent"

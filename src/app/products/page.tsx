@@ -17,7 +17,7 @@ export default async function ProductsPage() {
           
           <div className="relative z-10 space-y-4">
             <h1 className="text-5xl lg:text-7xl font-black text-white tracking-tighter">
-              Arsenal <span className="text-gradient">Tactical</span>
+              Catálogo de <span className="text-gradient">Productos</span>
             </h1>
             <p className="text-muted max-w-2xl text-lg font-medium leading-relaxed">
               Explora nuestra selección élite de componentes y equipos de alto rendimiento para entusiastas y profesionales.

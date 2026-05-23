@@ -44,13 +44,13 @@ export function Header() {
 
           <div className="hidden md:flex items-center space-x-12">
             <Link href="/products" className="text-muted hover:text-white transition-all font-black uppercase text-xs tracking-[0.2em]">
-              Arsenal
+              Productos
             </Link>
             <Link href="/build" className="text-muted hover:text-white transition-all font-black uppercase text-xs tracking-[0.2em]">
-              Command
+              Armar PC
             </Link>
             <Link href="/categories" className="text-muted hover:text-white transition-all font-black uppercase text-xs tracking-[0.2em]">
-              Signature
+              Categorías
             </Link>
           </div>
           <div className="flex items-center space-x-2">

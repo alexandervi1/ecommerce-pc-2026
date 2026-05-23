@@ -78,8 +78,8 @@ export function EmptyCart() {
   return (
     <EmptyState
       icon={ShoppingBag}
-      title="Arsenal Vacío"
-      description="Tu inventario táctico está listo para ser equipado. Explora nuestro catálogo de hardware de alto rendimiento."
+      title="Carrito vacío"
+      description="Aún no has agregado productos. Explora nuestro catálogo para encontrar lo que necesitas."
       actionLabel="Explorar Productos"
       actionHref="/products"
     />

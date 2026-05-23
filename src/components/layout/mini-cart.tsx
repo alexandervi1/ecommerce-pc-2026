@@ -54,7 +54,7 @@ export function MiniCart() {
               <ShoppingBag className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-xl font-black text-white tracking-tight uppercase">Tu Arsenal</h2>
+              <h2 className="text-xl font-black text-white tracking-tight uppercase">Tu Carrito</h2>
               <p className="text-[10px] font-bold text-gray-500 tracking-widest uppercase">
                 {itemCount} {itemCount === 1 ? "Componente" : "Componentes"} seleccionados
               </p>

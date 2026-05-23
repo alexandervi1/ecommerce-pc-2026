@@ -44,7 +44,7 @@ export default async function HomePage() {
               
               <div className="flex flex-wrap gap-6 pt-4">
                 <Link href="/products" className="btn-primary group">
-                  <span>Equipar Arsenal</span>
+                  <span>Ver Productos</span>
                   <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-transform" />
                 </Link>
                 <Link href="/build" className="btn-secondary">
@@ -122,8 +122,8 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
         <div className="flex justify-between items-end mb-16">
           <div>
-            <h2 className="text-5xl font-black text-white mb-4 uppercase italic">Signature <span className="text-accent">Lines</span></h2>
-            <p className="text-muted text-lg font-medium tracking-wide">Selección curada por rendimiento táctico.</p>
+            <h2 className="text-5xl font-black text-white mb-4 uppercase italic">Nuestras <span className="text-accent">Categorías</span></h2>
+            <p className="text-muted text-lg font-medium tracking-wide">Encuentra productos organizados por tipo y especialidad.</p>
           </div>
           <Link href="/categories" className="text-xs font-black uppercase tracking-[0.4em] text-accent hover:text-primary transition-all flex items-center gap-4">
             Explorar Todo <ChevronRight className="h-6 w-6" />
@@ -150,8 +150,8 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
         <div className="flex justify-between items-end mb-16">
           <div>
-            <h2 className="text-5xl font-black text-white mb-4 uppercase italic">Active <span className="text-accent">Arsenal</span></h2>
-            <p className="text-muted text-lg font-medium tracking-wide">Hardware de grado militar disponible para despliegue inmediato.</p>
+            <h2 className="text-5xl font-black text-white mb-4 uppercase italic">Productos <span className="text-accent">Destacados</span></h2>
+            <p className="text-muted text-lg font-medium tracking-wide">Los productos más populares de nuestro catálogo.</p>
           </div>
           <Link href="/products" className="text-xs font-black uppercase tracking-[0.4em] text-accent hover:text-primary transition-all flex items-center gap-4">
             Inventario Completo <ChevronRight className="h-6 w-6" />

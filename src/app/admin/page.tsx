@@ -47,7 +47,7 @@ export default function AdminDashboard() {
       setData(result);
     } catch (err) {
       console.error("Error fetching analytics:", err);
-      setError("No se pudo conectar con el núcleo de datos. Verifique privilegios.");
+      setError("No se pudo obtener los datos del panel. Verifique su conexión.");
     } finally {
       setLoading(false);
     }
@@ -94,7 +94,7 @@ export default function AdminDashboard() {
             Reintentar Conexión
           </Button>
           <Link href="/" className="block mt-6 text-xs font-bold text-gray-600 uppercase tracking-widest hover:text-white transition-colors">
-            Volver al Sector Civil
+            Volver al inicio
           </Link>
         </Card>
       </div>

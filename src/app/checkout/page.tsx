@@ -318,7 +318,7 @@ export default function CheckoutPage() {
           <div className="lg:col-span-5 sticky top-24">
             <div className="bg-white/5 p-8 rounded-[40px] border border-white/5 shadow-2xl">
               <button onClick={() => setIsSummaryExpanded(!isSummaryExpanded)} className="w-full flex items-center justify-between mb-10">
-                <h3 className="text-xl font-black text-white uppercase italic tracking-tight">Arsenal de Orden</h3>
+                <h3 className="text-xl font-black text-white uppercase italic tracking-tight">Resumen del Pedido</h3>
                 {isSummaryExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
               </button>
 

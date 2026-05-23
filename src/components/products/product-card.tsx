@@ -182,7 +182,7 @@ export function ProductCard({ product }: ProductCardProps) {
             ) : (
               <>
                 <ShoppingBag className="h-3.5 w-3.5" />
-                <span>Arsenal</span>
+                <span>Agregar</span>
               </>
             )}
           </button>

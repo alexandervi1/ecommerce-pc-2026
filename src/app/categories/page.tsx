@@ -26,7 +26,7 @@ export default async function CategoriesPage() {
           
           <div className="relative z-10 space-y-4">
             <h1 className="text-5xl lg:text-7xl font-black text-white tracking-tighter uppercase italic">
-              Signature <span className="text-gradient">Lines</span>
+              Nuestras <span className="text-gradient">Categorías</span>
             </h1>
             <p className="text-muted max-w-2xl text-lg font-medium leading-relaxed">
               Curaduría de hardware de élite clasificada por especialidad técnica. 
