@@ -25,6 +25,7 @@ interface AnalyticsData {
   topProducts: { id: string; name: string; image: string; totalSold: number; totalRevenue: number }[];
   dailySales: { date: string; orders: number; revenue: number }[];
   lowStockProducts: { id: string; name: string; stock: number }[];
+  recentProducts: { id: string; name: string; price: number; stock: number; isActive: boolean; categoryName: string | null }[];
   period: number;
 }
 
@@ -205,30 +206,35 @@ export default function AdminDashboard() {
           {/* Side Info */}
           <div className="space-y-8">
             <Card className="border-primary/20">
-              <h3 className="text-lg font-black text-white uppercase tracking-tight mb-6">Productos Élite</h3>
-              <div className="space-y-6">
-                {data.topProducts.map((prod, idx) => (
-                  <div key={prod.id} className="flex items-center gap-4">
-                    <div className="w-12 h-12 glass rounded-xl flex items-center justify-center text-primary font-black text-xs">
-                      #{idx + 1}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-white truncate">{prod.name}</p>
-                      <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{prod.totalSold} Vendidos</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-black text-primary">{formatPrice(prod.totalRevenue)}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-black text-white uppercase tracking-tight">Productos Recientes</h3>
+                <Link href="/admin/products" className="text-[10px] font-black text-primary hover:text-white transition-colors uppercase tracking-widest">
+                  Ver todos →
+                </Link>
               </div>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-primary/20 to-accent/20 border-white/10">
-              <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em] mb-2">Protocolos de Seguridad</h3>
-              <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
-                Cifrado de grado militar activo. Todas las operaciones son registradas y monitoreadas de forma independiente por el equipo de auditoría.
-              </p>
+              <div className="space-y-4">
+                {data.recentProducts.length === 0 ? (
+                  <p className="text-gray-600 text-xs font-bold uppercase tracking-widest text-center py-6">Sin productos aún</p>
+                ) : (
+                  data.recentProducts.map((prod) => (
+                    <div key={prod.id} className="flex items-center gap-3">
+                      <div className="w-10 h-10 glass rounded-xl flex items-center justify-center border-white/5 shrink-0">
+                        <Package className="h-4 w-4 text-primary/50" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-white truncate">{prod.name}</p>
+                        <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{prod.categoryName || "Sin categoría"}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className="text-sm font-black text-primary">{formatPrice(prod.price)}</p>
+                        <p className={`text-[9px] font-black uppercase tracking-widest ${prod.stock <= 5 ? "text-amber-500" : "text-gray-600"}`}>
+                          {prod.stock} uds
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </Card>
           </div>
         </div>

@@ -85,6 +85,14 @@ export async function GET(request: Request) {
       LIMIT 10
     `);
 
+    const recentProducts = await query(`
+      SELECT p.id, p.name, p.price, p.stock, p.image, p."isActive", c.name as "categoryName"
+      FROM ${table("products")} p
+      LEFT JOIN ${table("categories")} c ON p."categoryId" = c.id
+      ORDER BY p."createdAt" DESC
+      LIMIT 5
+    `);
+
     const previousPeriodRevenue = await query(`
       SELECT COALESCE(SUM(total), 0) as revenue
       FROM ${table("orders")}
@@ -112,6 +120,7 @@ export async function GET(request: Request) {
       dailySales,
       categorySales,
       lowStockProducts,
+      recentProducts,
       period: days,
     });
   } catch (error) {
