@@ -255,8 +255,8 @@ export function ProductExplorer({ initialProducts, categories }: ProductExplorer
               
               {isSortOpen && (
                 <>
-                  <div className="fixed inset-0 z-20" onClick={() => setIsSortOpen(false)} />
-                  <div className="absolute top-full right-0 mt-2 w-56 glass rounded-2xl border border-white/10 p-2 z-30 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="fixed inset-0 z-40" onClick={() => setIsSortOpen(false)} />
+                  <div className="absolute top-full right-0 mt-2 w-56 rounded-2xl border border-white/15 p-2 z-50 shadow-[0_16px_48px_rgba(0,0,0,0.6)] animate-in fade-in slide-in-from-top-2 duration-300" style={{ background: "oklch(15% 0.01 260 / 0.97)", backdropFilter: "blur(24px)" }}>
                     {sortOptions.map((option) => (
                       <button
                         key={option.value}
