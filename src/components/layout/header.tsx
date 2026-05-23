@@ -82,7 +82,7 @@ export function Header() {
                   </div>
                   <span className="hidden lg:inline text-sm font-medium">{session.user.name || "Mi Cuenta"}</span>
                 </button>
-                <div className="absolute right-0 mt-2 w-56 rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 border border-white/15 shadow-[0_16px_48px_rgba(0,0,0,0.6)]" style={{ background: "oklch(15% 0.01 260 / 0.95)", backdropFilter: "blur(24px)" }}>
+                <div className="absolute right-0 mt-2 w-56 rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50 border border-white/15 shadow-[0_16px_48px_rgba(0,0,0,0.6)]" style={{ background: "oklch(15% 0.01 260 / 0.95)", backdropFilter: "blur(24px)" }}>
                   <div className="px-4 py-2 border-b border-white/10 mb-2">
                     <p className="text-xs text-gray-400">Identificado como</p>
                     <p className="text-sm font-semibold text-white truncate">{session.user.email}</p>
@@ -145,7 +145,7 @@ export function Header() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden mt-2 glass rounded-2xl p-4 animate-in slide-in-from-top-4 duration-300">
+          <div className="md:hidden mt-2 rounded-2xl p-4 animate-in slide-in-from-top-4 duration-300 relative z-50 border border-white/15 shadow-[0_16px_48px_rgba(0,0,0,0.6)]" style={{ background: "oklch(15% 0.01 260 / 0.97)", backdropFilter: "blur(24px)" }}>
             <div className="flex flex-col space-y-4">
               <Link
                 href="/products"
